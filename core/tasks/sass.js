@@ -6,6 +6,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const paths = require('../paths');
+const browserSync = require('./browser-sync');
 
 module.exports = function () {
   const processors = [
@@ -25,6 +26,11 @@ module.exports = function () {
       });
       gutil.log(gutil.colors.red(err));
       gutil.beep();
+      global.error = {
+        type: 'Sass',
+        message: err.message
+      };
+      browserSync.reload();
       this.emit('end');
     })
     .pipe(postcss(processors))

@@ -35,5 +35,5 @@ gulp.task('build', ['compile-all', 'templates:compile'], function () {
   console.log('Build finished. Compiled files can be found in the dist/ directory.');
   process.exit(0);
 });
-gulp.task('browser-sync', ['server', 'compile-all', 'watch'], browserSync);
+gulp.task('browser-sync', ['server', 'compile-all', 'watch'], browserSync.start);
 gulp.task('default', ['browser-sync']);

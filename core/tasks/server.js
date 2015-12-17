@@ -23,26 +23,33 @@ app.set('views', [
 ]);
 
 function renderView(req, res, viewName, customLocals) {
+  console.log('Checking for error:', global.error);
   const locals = Object.assign({}, getDefaultLocals(), customLocals);
 
-  app.render(viewName, locals, function (err, html) {
-    if (err) {
-      if (err.message.includes('Failed to lookup view')) {
-        res.render('404', locals);
-      } else {
-        res.send(`<pre>${err}</pre>`);
-      }
-    } else {
-      html = beautify(html, {
-        logSuccess: false,
-        indentSize: 2,
-        unformatted: ['pre', 'textarea'],
-        extraLiners: ['body']
-      });
-
+  if (global.error) {
+    app.render('error', { error: global.error }, function (err, html) {
       res.send(html);
-    }
-  });
+    });
+  } else {
+    app.render(viewName, locals, function (err, html) {
+      if (err) {
+        if (err.message.includes('Failed to lookup view')) {
+          res.render('404', locals);
+        } else {
+          res.send(`<pre>${err}</pre>`);
+        }
+      } else {
+        html = beautify(html, {
+          logSuccess: false,
+          indentSize: 2,
+          unformatted: ['pre', 'textarea'],
+          extraLiners: ['body']
+        });
+
+        res.send(html);
+      }
+    });
+  }
 }
 
 module.exports = function (done) {

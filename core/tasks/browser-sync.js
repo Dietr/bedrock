@@ -3,18 +3,23 @@ const path = require('path');
 const paths = require('../paths');
 const config = require('../config');
 
-module.exports = function () {
-  return browserSync.init({
-    files: [
-      path.join(paths.dist.path, '**/*'),
-      paths.content.templates.all,
-      './core/templates/**/*.jade',
-      paths.content.scss.colorsDefinition,
-      paths.content.templates.data
-    ],
-    ui: false,
-    ghostMode: false,
-    notify: false,
-    proxy: `localhost:${global.expressPort}`
-  });
+module.exports = {
+  reload: function () {
+    browserSync.reload();
+  },
+  start: function () {
+    return browserSync.init({
+      files: [
+        path.join(paths.dist.path, '**/*'),
+        paths.content.templates.all,
+        './core/templates/**/*.jade',
+        paths.content.scss.colorsDefinition,
+        paths.content.templates.data
+      ],
+      ui: false,
+      ghostMode: false,
+      notify: false,
+      proxy: `localhost:${global.expressPort}`
+    });
+  }
 };
