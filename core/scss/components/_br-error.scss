@@ -1,0 +1,28 @@
+$br-error-color: #e74c3c;
+
+body {
+  background-color: $nope;
+}
+
+.br-error-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.br-error {
+  border: 1px solid $br-error-color;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.br-error-header {
+  background-color: $br-error-color;
+  font-size: 24px;
+  color: #fff;
+  padding: 20px;
+}
+
+.br-error-content {
+  padding: 20px;
+}

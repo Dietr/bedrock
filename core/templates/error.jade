@@ -1,4 +1,11 @@
-h1 An error occured!
+doctype html
+html(lang='en')
+    head
+        title Bedrock | Error
+        link(rel='stylesheet', href='/css/prototype.css')
 
-p Type: #{error.type}
-pre= error.message
+body(class="br-error-container")
+    .br-error
+        .br-error-header= error.type
+        pre.br-error-content= error.message
+

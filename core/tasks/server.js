@@ -11,6 +11,7 @@ const colors = require('../discovery/colors');
 const pages = require('../discovery/pages');
 const patterns = require('../discovery/patterns');
 const paths = require('../paths');
+const errors = require('./util/errors');
 const getDefaultLocals = require('./templates').getDefaultLocals;
 
 const app = express();
@@ -23,11 +24,11 @@ app.set('views', [
 ]);
 
 function renderView(req, res, viewName, customLocals) {
-  console.log('Checking for error:', global.error);
   const locals = Object.assign({}, getDefaultLocals(), customLocals);
+  const error = errors.getFirstError();
 
-  if (global.error) {
-    app.render('error', { error: global.error }, function (err, html) {
+  if (error) {
+    app.render('error', { error }, function (err, html) {
       res.send(html);
     });
   } else {

@@ -1,12 +1,10 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
-const gutil = require('gulp-util');
-const notifier = require('node-notifier');
 const sourcemaps = require('gulp-sourcemaps');
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const paths = require('../paths');
-const browserSync = require('./browser-sync');
+const errors = require('./util/errors');
 
 module.exports = function () {
   const processors = [
@@ -20,20 +18,14 @@ module.exports = function () {
     .pipe(sourcemaps.init())
     .pipe(sass())
     .on('error', function (err) {
-      notifier.notify({
-        title: 'SASS error',
-        message: err.message
-      });
-      gutil.log(gutil.colors.red(err));
-      gutil.beep();
-      global.error = {
-        type: 'Sass',
-        message: err.message
-      };
-      browserSync.reload();
+      this.err = err;
+      errors.displayError(errors.errorTypes.sass, err);
       this.emit('end');
     })
     .pipe(postcss(processors))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest(paths.dist.css));
+    .pipe(gulp.dest(paths.dist.css))
+    .on('end', function (err) {
+      console.log('end:', this);
+    });
 };
