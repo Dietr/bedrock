@@ -40,6 +40,14 @@ module.exports = {
         return parsedFile;
       });
 
-    return _.sortBy(docFiles, (d) => d.attributes.order);
+    return {
+      allDocs: docFiles,
+      byCategory: _.chain(docFiles)
+        .groupBy((d) => d.attributes.category)
+        .mapValues((docsInCategory) => {
+          return _.sortBy(docsInCategory, (d) => d.attributes.order)
+        })
+        .value()
+    };
   }
 };

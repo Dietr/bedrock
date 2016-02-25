@@ -1,5 +1,6 @@
 ---
 title: Design principles
+category: Style guide
 order: 2
 ---
 

@@ -3,6 +3,11 @@ module.exports = {
     snippetLanguage: 'jade',
     colors: './content/scss/settings/_colors.scss',
     showIndividualComponentsInNav: false,
+    categoryOrder: [
+      'Style guide',
+      'Overviews',
+      'Components',
+    ]
   },
   icons: {
     generateIconsFromSource: true,
